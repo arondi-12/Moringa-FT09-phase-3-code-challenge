@@ -19,6 +19,11 @@ class Author:
     def id(self):
         return self._id
     
+    @id.setter
+    def id(self, id):
+        if isinstance(id, int):
+            self._id = id
+    
     @property
     def name(self):
         conn = get_db_connection()
@@ -30,6 +35,14 @@ class Author:
         self._name = cursor.fetchone()[0]
         conn.close()
         return self._name
+    
+    @name.setter
+    def name(self, new_name):
+        if hasattr(self,'_name'):
+            raise AttributeError("Name cannot be changed after being initiallized")
+        else:
+            if isinstance(new_name, str) and len (new_name) > 0:
+                self._name = new_name
 
     def __repr__(self):
         return f'<Author {self.name}>'
