@@ -4,33 +4,23 @@ class Magazine:
     def __init__(self, id, name = None, category = None):
         self._id = id
         self._name = name
-        self._category = category
+        self._category = category if category is not None else "Uncategorized"
 
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute(
-            "INSERT INTO magazine (name, category) VALUES (?,?)",
-        (self.name, self.category)
-        )
+        sql = """
+            INSERT INTO magazines (name, category)
+            VALUES (?,?)
+        """
+        cursor.execute(sql, (self._name, self._category))
         conn.commit()
-        self.id = cursor.lastrowid
         conn.close()
 
     @property
     def id(self):
         return self._id
     
-    @property
-    def name(self):
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute(
-            "SELECT name FROM authors WHERE id = ?",
-            (self._id, self._name, self._category)
-        )
-        self._name = cursor.fetchone()[0]
-        conn.close()
-        return self._name
+    
     
     @id.setter
     def id(self,id):
