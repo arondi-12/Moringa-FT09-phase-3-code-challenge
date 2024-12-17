@@ -37,7 +37,7 @@ class Article:
             author_data = cursor.fetchone()
             
             if author_data:
-                return Author(*author_data)  # Assuming Author constructor matches the database columns
+                return Author(*author_data)  
             return None
 
     @property
@@ -58,7 +58,7 @@ class Article:
             magazine_data = cursor.fetchone()
             
             if magazine_data:
-                return Magazine(*magazine_data)  # Assuming Magazine constructor matches the database columns
+                return Magazine(*magazine_data)  
             return None
 
     @property
